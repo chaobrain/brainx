@@ -5,8 +5,7 @@ initially developed in [Professor Si Wu's lab at Peking University][wu-lab], wit
 development led by [Professor Chaoming Wang][wangchaoming]. The group works on
 computational neuroscience and brain-inspired computing.
 
-The ideas first explored in it — stateful dynamical systems, event-driven operators,
-and unit-aware parameters — were developed into the focused, production-level packages
+The ideas first explored in it — stateful dynamical systems, and event-driven operators — were developed into the focused, production-level packages
 that make up [`brainx`][brainx] today.
 
 The neural-mass modeling explored in [`brainpy`][brainpy] evolved into the dedicated
