@@ -1,8 +1,7 @@
 # BrainPy to BrainX
 
 [`brainpy`][brainpy] is the experimental precursor of [`brainx`][brainx]. It was
-initially developed in [Professor Si Wu's lab at Peking University][wu-lab], with
-development led by [Professor Chaoming Wang][wangchaoming]. The group works on
+initially developed in [Professor Si Wu's lab at Peking University][wu-lab], where the group works on
 computational neuroscience and brain-inspired computing.
 
 The ideas first explored in it — stateful dynamical systems, and event-driven operators — were developed into the focused, production-level packages
