@@ -24,17 +24,17 @@ backend-path = ["_packaging"]
 name = "BrainX"
 description = "Ecosystem for Brain Simulation."
 readme = "README.md"
-requires-python = ">=3.11"
+requires-python = ">=3.12"
 authors = [{ name = "BrainX Ecosystem", email = "chao.brain@qq.com" }]
 classifiers = [
     "Natural Language :: English",
     "Operating System :: OS Independent",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
     "Programming Language :: Python :: 3.14",
+    "Programming Language :: Python :: 3.15",
     "Intended Audience :: Science/Research",
     "Topic :: Scientific/Engineering :: Bio-Informatics",
     "Topic :: Scientific/Engineering :: Mathematics",
@@ -61,10 +61,10 @@ Homepage = "https://github.com/chaobrain/brainx"
 
 
 [project.optional-dependencies]
-cpu = ["jax[cpu]", "numba"]
-cuda12 = ["jax[cuda12]"]
-cuda13 = ["jax[cuda13]"]
-tpu = ["jax[tpu]"]
+cpu = ["jax[cpu]>=0.9.0", "numba"]
+cuda12 = ["jax[cuda12]>=0.9.0"]
+cuda13 = ["jax[cuda13]>=0.9.0"]
+tpu = ["jax[tpu]>=0.9.0"]
 
 
 [tool.setuptools.packages.find]
