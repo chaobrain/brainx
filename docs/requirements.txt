@@ -1,7 +1,7 @@
 # document requirements
 pandoc
 Jinja2
-sphinx>=9.0.4
+sphinx>=9.1.0
 myst-nb
 sphinx_thebe
 sphinx-autodoc-typehints
