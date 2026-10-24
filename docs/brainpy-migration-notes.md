@@ -1,28 +1,27 @@
 # BrainPy migration notes
 
-Practical notes for moving a [`brainpy`][brainpy] project onto the
-[`brainx`][brainx] packages: what maps to what, a worked before/after example, and the
+Practical notes for porting a [`brainpy`][brainpy] model from the `DynamicalSystem` API
+to the `brainstate`-based APIs ([`brainpy.state`][brainpy.state] and the other
+[`brainx`][brainx] packages): what maps to what, a worked before/after example, and the
 cases that do not carry over.
 
-For why the ecosystem is arranged this way, which package owns which modeling scale,
-and whether your project should move at all, read
-[BrainPy to BrainX](./brainpy-to-brainx.md) first.
+For which package owns which modeling scale, and whether your model should be ported at
+all, read [BrainPy in BrainX](./brainpy-to-brainx.md) first.
 
-## The two packages at a glance
+## The two APIs at a glance
 
-`brainpy` and `brainpy.state` share an import root and nothing else:
+`brainpy` and `brainpy.state` ship together (BrainPy >= 2.9.0) but share little else:
 
 | | `brainpy` | `brainpy.state` |
 | --- | --- | --- |
 | import | `import brainpy as bp` | `import brainpy.state` |
-| PyPI distribution | `brainpy` | `brainpy-state` |
 | state objects | `brainpy.math.Variable` | `brainstate.State` |
 | module base class | `brainpy.DynamicalSystem` | `brainstate.nn.Module` |
 | simulation loop | `brainpy.DSRunner` | `brainstate.transform.for_loop` |
 | parameters | plain floats (ms, mV by convention) | [`brainunit`][brainunit] quantities |
 
-Both are installed by `pip install -U BrainX`, or separately with
-`pip install brainpy brainpy-state`. They import cleanly into the same process, so a
+Both are installed by `pip install -U BrainX`, or with `pip install "brainpy>=2.9.0"`.
+They import cleanly into the same process, so a
 project can migrate one model at a time.
 
 ## Migration in four steps
@@ -148,7 +147,7 @@ instead of an explicit `VarDelay`, and the runner is replaced by a compiled `for
 
 ## Runtime mapping
 
-| `brainpy` | [`brainx`][brainx] |
+| `brainpy` | `brainstate`-based |
 | --- | --- |
 | `brainpy.math.Variable` | `brainstate.HiddenState` / `brainstate.ParamState` |
 | `brainpy.DynamicalSystem`, `brainpy.DynSysGroup` | `brainstate.nn.Module` |
@@ -161,7 +160,7 @@ instead of an explicit `VarDelay`, and the runner is replaced by a compiled `for
 
 ## Module mapping
 
-| `brainpy` | [`brainx`][brainx] |
+| `brainpy` | `brainstate`-based |
 | --- | --- |
 | `brainpy.dyn` (point neurons, synapses, projections) | `brainpy.state` |
 | `brainpy.dyn` channels, ions, `CondNeuGroup` | [`braincell`][braincell] |
@@ -191,7 +190,7 @@ TypeError: exp requires ndarray or scalar arguments, got <class 'saiunit.Quantit
 ```
 
 Strip units at the boundary — `(10. * u.mV).to_decimal(u.mV)` — or migrate the model.
-End-to-end unit safety is only available on the [`brainx`][brainx] side.
+End-to-end unit safety is only available on the `brainstate`-based side.
 
 **Online learning.** [`braintrace`][braintrace] attaches eligibility traces to operations
 inside `brainstate`-based modules. It cannot see a `brainpy.math.Variable` graph, so
@@ -209,7 +208,7 @@ Port whole models, not individual layers. The two can still live in the same scr
 separate models.
 
 **Analysis.** `brainpy.analysis` — phase-plane analyzers, `Bifurcation1D` /
-`Bifurcation2D`, slow-fast decomposition — has no counterpart in [`brainx`][brainx]. The
+`Bifurcation2D`, slow-fast decomposition — has no `brainstate`-based counterpart. The
 usual pattern is to keep a reduced `brainpy` model for analysis alongside the migrated
 simulation model.
 
@@ -235,7 +234,7 @@ For a hands-on introduction to the target APIs, work through the
 
 [brainx]: https://brainx.chaobrain.com/
 [brainpy]: https://brainpy.readthedocs.io/
-[brainpy.state]: https://brainx.chaobrain.com/brainpy-state/
+[brainpy.state]: https://brainpy.readthedocs.io/state/index.html
 [brainstate]: https://brainx.chaobrain.com/brainstate/
 [brainevent]: https://brainx.chaobrain.com/brainevent/
 [braintools]: https://brainx.chaobrain.com/braintools/

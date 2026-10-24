@@ -19,7 +19,7 @@ This installs pinned versions of the core packages:
 - [brainunit](https://github.com/chaobrain/brainunit)
 - [brainstate](https://github.com/chaobrain/brainstate)
 - [brainpy](https://brainpy.readthedocs.io/)
-- [brainpy.state](https://brainx.chaobrain.com/brainpy-state)
+- [brainspike](https://brainx.chaobrain.com/brainspike/)
 - [brainevent](https://github.com/chaobrain/brainevent)
 - [braincell](https://github.com/chaobrain/braincell)
 - [braintrace](https://github.com/chaobrain/braintrace)

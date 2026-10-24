@@ -5,6 +5,14 @@
 
 
 
+## Unreleased
+
+- Pin **BrainPy `2.9.0`**, which includes the state-based models in `brainpy.state`,
+  and add **BrainSpike `0.2.0`** (`brainspike`), the point-neuron spiking network
+  package with NEST-compatible models. `brainpy-state` leaves the pin set.
+- The NEST-compatible tutorial is now `tutorials/brainspike_NEST_compatible.ipynb`.
+
+
 ## v2026.8.18
 
 This release brings the bundle to **JAX 0.11**. JAX 0.11.0 and 0.11.1 changed
