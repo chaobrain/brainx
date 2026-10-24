@@ -55,6 +55,7 @@ class Test:
     def test_imports(self):
         import brainmass
         import brainpy.state
+        import brainspike
         import braincell
         import braintools
         import braintrace
@@ -64,6 +65,7 @@ class Test:
 
         print(brainmass.__version__)
         print(brainpy.__version__)
+        print(brainspike.__version__)
         print(braincell.__version__)
         print(braintools.__version__)
         print(braintrace.__version__)
@@ -81,7 +83,7 @@ class Test:
             "braintrace",
             "braincell",
             "brainpy",
-            "brainpy-state",
+            "brainspike",
             "brainmass",
         }
         missing = sorted(expected - set(_PINNED))

@@ -9,7 +9,8 @@ The neural-mass modeling explored in [`brainpy`][brainpy] evolved into the dedic
 [`brainmass`][brainmass] package. Its Hodgkin-Huxley cell models inspired the more
 comprehensive conductance-based models, ion-channel systems, and neuronal morphology
 support now provided by [`braincell`][braincell]. Its point-neuron modeling — the part
-[`brainpy`][brainpy] was best at — became [`brainpy.state`][brainpy.state].
+[`brainpy`][brainpy] was best at — continues in [`brainpy.state`][brainpy.state], and
+[`brainspike`][brainspike] covers NEST-compatible point-neuron simulation.
 
 The development unfolded in three broad stages:
 
@@ -28,14 +29,12 @@ mechanics: API mappings, a worked before/after example, and the cases that need 
 
 ## `brainpy` and `brainpy.state`
 
-`brainpy` and `brainpy.state` are two different packages. They share an import root
-and little else: they are distributed separately on PyPI (`brainpy` and
-`brainpy-state`), and they are built on different state systems — `brainpy` on its own
+`brainpy.state` ships inside the `brainpy` distribution (BrainPy >= 2.9.0), but it is
+built on a different state system from the classic API: `brainpy` on its own
 `brainpy.math.Variable`, `brainpy.state` on [`brainstate`][brainstate].
 
-Most of the confusion around migration comes from this one fact. Both are installed by
-`pip install -U BrainX` and import cleanly into the same process, so a project can
-migrate one model at a time. The
+Most of the confusion around migration comes from this one fact. Both APIs import
+cleanly into the same process, so a project can migrate one model at a time. The
 [migration notes](./brainpy-migration-notes.md) tabulate the differences.
 
 ## Status and support
@@ -54,7 +53,7 @@ long-term feature work.
 
 ## Where each modeling scale now lives
 
-**Point-neuron networks → [`brainpy.state`][brainpy.state].** This was `brainpy`'s main
+**Point-neuron networks → [`brainpy.state`][brainpy.state] or [`brainspike`][brainspike].** This was `brainpy`'s main
 strength, and it is the scale that carried over most directly. Model names and
 projection patterns stay recognizable; the state system and the runner are what change.
 
@@ -112,6 +111,7 @@ than being retired.
 | your situation | recommendation |
 | --- | --- |
 | Starting a new point-neuron project | [`brainpy.state`][brainpy.state] |
+| Running NEST models on accelerators, or training them | [`brainspike`][brainspike] |
 | Maintaining a working `brainpy` project | stay; migrate when you need something below |
 | Modeling ions, ion channels, or morphology | [`brainpy.state`][brainpy.state] + [`braincell`][braincell] — migrate |
 | Modeling neural-mass or whole-brain dynamics | [`brainmass`][brainmass] |
@@ -124,7 +124,7 @@ than being retired.
 Treat `brainpy` as the experimental embryo that inspired the [`brainx`][brainx]
 ecosystem. It remains maintained and usable for established projects and for its unique
 analysis tools, while [`brainx`][brainx] is where new work belongs:
-[`brainpy.state`][brainpy.state] for point-neuron networks, [`braincell`][braincell] for
+[`brainpy.state`][brainpy.state] and [`brainspike`][brainspike] for point-neuron networks, [`braincell`][braincell] for
 ions, channels, and morphology, and [`brainmass`][brainmass] for neural-mass and
 whole-brain models.
 
@@ -133,7 +133,8 @@ Ready to move? Continue with the
 
 [brainx]: https://brainx.chaobrain.com/
 [brainpy]: https://brainpy.readthedocs.io/
-[brainpy.state]: https://brainx.chaobrain.com/brainpy-state/
+[brainpy.state]: https://brainpy.readthedocs.io/state/index.html
+[brainspike]: https://brainx.chaobrain.com/brainspike/
 [brainstate]: https://brainx.chaobrain.com/brainstate/
 [brainevent]: https://brainx.chaobrain.com/brainevent/
 [braintools]: https://brainx.chaobrain.com/braintools/

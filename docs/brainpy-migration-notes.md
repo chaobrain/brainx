@@ -10,19 +10,18 @@ and whether your project should move at all, read
 
 ## The two packages at a glance
 
-`brainpy` and `brainpy.state` share an import root and nothing else:
+`brainpy` and `brainpy.state` ship together (BrainPy >= 2.9.0) but share little else:
 
 | | `brainpy` | `brainpy.state` |
 | --- | --- | --- |
 | import | `import brainpy as bp` | `import brainpy.state` |
-| PyPI distribution | `brainpy` | `brainpy-state` |
 | state objects | `brainpy.math.Variable` | `brainstate.State` |
 | module base class | `brainpy.DynamicalSystem` | `brainstate.nn.Module` |
 | simulation loop | `brainpy.DSRunner` | `brainstate.transform.for_loop` |
 | parameters | plain floats (ms, mV by convention) | [`brainunit`][brainunit] quantities |
 
-Both are installed by `pip install -U BrainX`, or separately with
-`pip install brainpy brainpy-state`. They import cleanly into the same process, so a
+Both are installed by `pip install -U BrainX`, or with `pip install "brainpy>=2.9.0"`.
+They import cleanly into the same process, so a
 project can migrate one model at a time.
 
 ## Migration in four steps
@@ -235,7 +234,7 @@ For a hands-on introduction to the target APIs, work through the
 
 [brainx]: https://brainx.chaobrain.com/
 [brainpy]: https://brainpy.readthedocs.io/
-[brainpy.state]: https://brainx.chaobrain.com/brainpy-state/
+[brainpy.state]: https://brainpy.readthedocs.io/state/index.html
 [brainstate]: https://brainx.chaobrain.com/brainstate/
 [brainevent]: https://brainx.chaobrain.com/brainevent/
 [braintools]: https://brainx.chaobrain.com/braintools/

@@ -21,7 +21,7 @@ The tutorials are organized around the BrainX package layers:
  - Physical Units :  ``brainunit``
  - Events & Tools :  ``brainevent`` ``braintools``
  - State Runtime :  ``brainstate``
- - Models :  ``brainpy.state`` ``braincell`` ``brainmass``
+ - Models :  ``brainpy`` ``brainspike`` ``braincell`` ``brainmass``
  - Online Learning :  ``braintrace``
 
 **For more detailed information**, click a package card to open its full package documentation:
@@ -61,12 +61,20 @@ The tutorials are organized around the BrainX package layers:
       Stateful JAX modules, parameters, transforms, and runtime management.
 
 
-   .. grid-item-card:: brainpy.state
-      :link: https://brainx.chaobrain.com/brainpy-state/
+   .. grid-item-card:: brainpy
+      :link: https://brainpy.readthedocs.io/
       :link-type: url
       :class-card: sd-card-hover sd-shadow-md
 
-      Point-neuron networks, synapses, projections, and SNN models.
+      General-purpose brain dynamics programming, with state-based models in ``brainpy.state``.
+
+
+   .. grid-item-card:: brainspike
+      :link: https://brainx.chaobrain.com/brainspike/
+      :link-type: url
+      :class-card: sd-card-hover sd-shadow-md
+
+      Point-neuron spiking networks: NEST-compatible models, simulation, and training.
 
 
    .. grid-item-card:: braincell
@@ -114,7 +122,7 @@ The tutorials are organized around the BrainX package layers:
    tutorials/braintools_expriment_utilities.ipynb
    tutorials/brainstate_transformations.ipynb
    tutorials/brainpy_point_neuron_networks.ipynb
-   tutorials/brainpy_NEST_compatible.ipynb
+   tutorials/brainspike_NEST_compatible.ipynb
    tutorials/braincell_HH_neuron.ipynb
    tutorials/braincell_morphological_golgi_cell.ipynb
    tutorials/brainmass_jansenrit_node_simulation.ipynb
