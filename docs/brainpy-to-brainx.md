@@ -1,9 +1,9 @@
-# BrainPy to BrainX
+# BrainPy in BrainX
 
-[`brainpy`][brainpy], initially developed in [Professor Si Wu's lab at Peking University][wu-lab], is the experimental precursor of [`brainx`][brainx], now mainly maintained by [Chaoming Wang's lab][chaobrain] and many collaborating laboratories. 
+[`brainpy`][brainpy], initially developed in [Professor Si Wu's lab at Peking University][wu-lab] and now mainly maintained by [Chaoming Wang's lab][chaobrain] and many collaborating laboratories, is the general-purpose brain dynamics programming package of [`brainx`][brainx].
 
-The ideas first explored in it — stateful dynamical systems, and event-driven operators — were developed into the focused, production-level packages
-that make up [`brainx`][brainx] today.
+Ideas first explored in it — stateful dynamical systems, and event-driven operators — also shaped the focused packages
+that sit beside it in [`brainx`][brainx].
 
 The neural-mass modeling explored in [`brainpy`][brainpy] evolved into the dedicated
 [`brainmass`][brainmass] package. Its Hodgkin-Huxley cell models inspired the more
@@ -23,39 +23,35 @@ The development unfolded in three broad stages:
   infrastructure and different modeling scales into focused packages; the
   [change log](./CHANGELOG.md) records the first integrated BrainX releases.
 
-This page explains how the packages relate and whether your project should move.
-When you decide to move, the [migration notes](./brainpy-migration-notes.md) cover the
-mechanics: API mappings, a worked before/after example, and the cases that need care.
+This page explains how `brainpy` fits with the other packages and when a model is better
+served by one of them. When you decide to port a model, the
+[migration notes](./brainpy-migration-notes.md) cover the mechanics: API mappings, a
+worked before/after example, and the cases that need care.
 
 ## `brainpy` and `brainpy.state`
 
 `brainpy.state` ships inside the `brainpy` distribution (BrainPy >= 2.9.0), but it is
-built on a different state system from the classic API: `brainpy` on its own
+built on a different state system from the `DynamicalSystem` API: `brainpy` on its own
 `brainpy.math.Variable`, `brainpy.state` on [`brainstate`][brainstate].
 
 Most of the confusion around migration comes from this one fact. Both APIs import
 cleanly into the same process, so a project can migrate one model at a time. The
 [migration notes](./brainpy-migration-notes.md) tabulate the differences.
 
-## Status and support
+## Versions
 
 This page describes `brainpy` 2.x and the component versions pinned by the current
 [`brainx`][brainx] release; see the [change log](./CHANGELOG.md) for the exact pins.
 
-`brainpy` ships in the BrainX pin set and is in **maintenance**: it receives
-compatibility and bug fixes (for example the recent JAX 0.11 fix), and its `analysis`
-module is still unique in the ecosystem. New modeling features land in the
-[`brainx`][brainx] packages, not in `brainpy`.
+Existing `brainpy` projects do not need to be rewritten. Porting a model to the
+`brainstate`-based APIs pays off when it needs unit-safe parameters, multicompartment
+cells, or online learning.
 
-Existing `brainpy` projects do not need to be rewritten. Migration pays off when a
-project needs unit-safe parameters, multicompartment cells, online learning, or
-long-term feature work.
+## Packages by modeling scale
 
-## Where each modeling scale now lives
-
-**Point-neuron networks → [`brainpy.state`][brainpy.state] or [`brainspike`][brainspike].** This was `brainpy`'s main
-strength, and it is the scale that carried over most directly. Model names and
-projection patterns stay recognizable; the state system and the runner are what change.
+**Point-neuron networks → [`brainpy.state`][brainpy.state] or [`brainspike`][brainspike].** Moving a
+`DynamicalSystem` model to `brainpy.state` keeps model names and projection patterns
+recognizable; the state system and the runner are what change.
 
 **Cells, ions, and morphology → [`braincell`][braincell].** Migrate rather than mix. The
 older ion and channel APIs in `brainpy` have known design limitations and its
@@ -70,12 +66,12 @@ never had — Jansen-Rit, Epileptor, Hopf, Montbrió-Pazó-Roxin, Wong-Wang,
 Larter-Breakspear — and the infrastructure whole-brain work needs: explicit coupling
 schemes, structured noise processes, forward models for BOLD, EEG, and MEG signals, and
 parameter fitting against empirical data. Unlike the cellular case this is not a
-warning; the `brainpy` rate models still work, this scale is simply developed in
-[`brainmass`][brainmass] now.
+warning; the `brainpy` rate models work, and [`brainmass`][brainmass] is the dedicated
+package for this scale.
 
-## Why existing brainpy code still works
+## Shared foundations
 
-The current `brainpy` codebase was reconstructed on top of [`brainstate`][brainstate],
+The current `brainpy` codebase is built on top of [`brainstate`][brainstate],
 [`brainevent`][brainevent], and [`braintools`][braintools]. This is not only a dependency
 relationship: many internal functions delegate to the production-level implementations,
 so the two share the same underlying code rather than maintaining parallel ports.
@@ -92,43 +88,41 @@ so the two share the same underlying code rather than maintaining parallel ports
 - State handling, environment settings, and compiled transformations come from
   [`brainstate`][brainstate], through `State`, `environ`, and `transform`.
 
-So a `brainpy` project keeps working and stays on the same foundations as the rest of
+So a `brainpy` project stays on the same foundations as the rest of
 the ecosystem. Two packages sit outside that arrangement: [`brainunit`][brainunit],
 whose quantities `brainpy.math` cannot consume, and [`braintrace`][braintrace], whose
 online-learning traces attach to [`brainstate`][brainstate] modules only. Sharing
 foundations also does not mean models from both sides can be composed into one — see
 the [migration notes](./brainpy-migration-notes.md) for both limits in detail.
 
-## What brainpy still owns
+## What only brainpy provides
 
 `brainpy.analysis` — phase-plane analyzers, `Bifurcation1D` / `Bifurcation2D`, slow-fast
-decomposition — has no counterpart in [`brainx`][brainx]. This is the one capability for
-which `brainpy` remains the right tool, and the reason it stays in the pin set rather
-than being retired.
+decomposition — has no counterpart in the other [`brainx`][brainx] packages.
 
-## Should I migrate?
+## Which package should I use?
 
 | your situation | recommendation |
 | --- | --- |
 | Starting a new point-neuron project | [`brainpy.state`][brainpy.state] |
 | Running NEST models on accelerators, or training them | [`brainspike`][brainspike] |
-| Maintaining a working `brainpy` project | stay; migrate when you need something below |
-| Modeling ions, ion channels, or morphology | [`brainpy.state`][brainpy.state] + [`braincell`][braincell] — migrate |
+| Maintaining a working `brainpy` project | keep it; port when you need something below |
+| Modeling ions, ion channels, or morphology | [`brainpy.state`][brainpy.state] + [`braincell`][braincell] |
 | Modeling neural-mass or whole-brain dynamics | [`brainmass`][brainmass] |
-| Wanting unit-safe parameters ([`brainunit`][brainunit]) | migrate — `brainpy.math` cannot consume quantities |
-| Wanting online learning ([`braintrace`][braintrace]) | migrate — traces attach to `brainstate` modules only |
-| Depending on `brainpy.analysis` | stay on `brainpy` for that part |
+| Wanting unit-safe parameters ([`brainunit`][brainunit]) | `brainpy.state` — `brainpy.math` cannot consume quantities |
+| Wanting online learning ([`braintrace`][braintrace]) | `brainpy.state` — traces attach to `brainstate` modules only |
+| Phase-plane or bifurcation analysis | `brainpy.analysis` |
 
 ## In short
 
-Treat `brainpy` as the experimental embryo that inspired the [`brainx`][brainx]
-ecosystem. It remains maintained and usable for established projects and for its unique
-analysis tools, while [`brainx`][brainx] is where new work belongs:
-[`brainpy.state`][brainpy.state] and [`brainspike`][brainspike] for point-neuron networks, [`braincell`][braincell] for
-ions, channels, and morphology, and [`brainmass`][brainmass] for neural-mass and
-whole-brain models.
+`brainpy` is the general-purpose brain dynamics programming package of
+[`brainx`][brainx], with [`brainpy.state`][brainpy.state] for state-based models and
+`brainpy.analysis` for dynamical-systems analysis. Beside it,
+[`brainspike`][brainspike] covers NEST-compatible point-neuron networks,
+[`braincell`][braincell] ions, channels, and morphology, and [`brainmass`][brainmass]
+neural-mass and whole-brain models.
 
-Ready to move? Continue with the
+Porting a `DynamicalSystem` model? Continue with the
 [BrainPy migration notes](./brainpy-migration-notes.md).
 
 [brainx]: https://brainx.chaobrain.com/
