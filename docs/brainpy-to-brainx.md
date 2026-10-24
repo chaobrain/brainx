@@ -1,6 +1,6 @@
 # BrainPy to BrainX
 
-[`brainpy`][brainpy], initially developed in [Professor Si Wu's lab at Peking University][wu-lab], is the experimental precursor of [`brainx`][brainx]. 
+[`brainpy`][brainpy], initially developed in [Professor Si Wu's lab at Peking University][wu-lab], is the experimental precursor of [`brainx`][brainx], now mainly maintained by [Chaoming Wang's lab][chaobrain] and many collaborating laboratories. 
 
 The ideas first explored in it — stateful dynamical systems, and event-driven operators — were developed into the focused, production-level packages
 that make up [`brainx`][brainx] today.
@@ -143,6 +143,7 @@ Ready to move? Continue with the
 [braintrace]: https://brainx.chaobrain.com/braintrace/
 [wu-lab]: https://www.psy.pku.edu.cn/english/people/faculty/professor/wusi/index.htm
 [wangchaoming]: https://wangchaoming.com
+[chaobrain]: https://chaobrain.com
 [brainpy-1-paper]: https://doi.org/10.1007/978-3-030-92238-2_2
 [brainpy-preprint]: https://doi.org/10.1101/2022.10.28.514024
 [brainpy-paper]: https://doi.org/10.7554/eLife.86365
