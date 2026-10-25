@@ -13,6 +13,7 @@
 - The NEST-compatible tutorial is now `tutorials/brainspike_NEST_compatible.ipynb`.
 - Upgrade the infrastructure pins: brainunit `0.6.0`, brainevent `0.3.0`, brainstate `0.6.0`,
   braintools `0.4.0`, braintrace `0.2.8`.
+- Allow JAX up to `0.12.0.1` (`jax>=0.9.0,<=0.12.0.1`); CI also tests JAX 0.12.0.
 
 
 ## v2026.8.18
