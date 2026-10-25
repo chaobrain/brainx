@@ -122,7 +122,6 @@ through the [point-neuron network tutorial](./tutorials/brainpy_point_neuron_net
 | your situation | recommendation |
 | --- | --- |
 | Maintaining a working `brainpy` project | keep it; see [Should you port?](#should-you-port) above |
-| Porting an existing `brainpy` point-neuron model | [`brainpy.state`][brainpy.state] (same model names and projection patterns) |
 | Modeling large-scale point-neuron spiking neural networks | [`brainspike`][brainspike] |
 | Modeling ions, ion channels, or morphology | [`braincell`][braincell] |
 | Modeling neural-mass or whole-brain dynamics | [`brainmass`][brainmass] |
