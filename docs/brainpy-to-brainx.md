@@ -1,8 +1,8 @@
 # BrainPy in BrainX
 
-[`brainpy`][brainpy] is one package in [`brainx`][brainx]. This page explains where it sits among the other packages, which
-package fits which kind of model, and what an existing `brainpy` project can and cannot
-combine with the rest of the ecosystem.
+[`brainpy`][brainpy] is one package in [`brainx`][brainx]. This page explains where it
+sits among the other packages, which package fits which kind of model, and what an
+existing `brainpy` project can and cannot combine with the rest of the ecosystem.
 
 It describes `brainpy` 2.x and the component versions pinned by the current
 [`brainx`][brainx] release; see the [change log](./CHANGELOG.md) for the exact pins.
@@ -10,8 +10,9 @@ It describes `brainpy` 2.x and the component versions pinned by the current
 ## Background
 
 `brainpy` was initially developed in [Professor Si Wu's lab at Peking University][wu-lab].
-It was the experimental package that came before BrainX. BrainX is now mainly
-maintained by [Chaoming Wang's lab][chaobrain] and communities.
+It predates BrainX and served as the testbed for the ideas the ecosystem grew from.
+`brainpy` and the rest of BrainX are now mainly maintained by
+[Chaoming Wang's lab][chaobrain] and the community.
 
 - **2021:** The BrainPy 1.0 approach was presented at ICONIP in
   [*A Just-In-Time Compilation Approach for Neural Dynamics Simulation*][brainpy-1-paper].
@@ -23,31 +24,33 @@ maintained by [Chaoming Wang's lab][chaobrain] and communities.
 ## Shared foundations
 
 The current `brainpy` codebase is built on [`brainstate`][brainstate],
-[`brainevent`][brainevent], and [`braintools`][braintools]. Many internal functions
-delegate to their implementations, so the two sides share the same code rather than
-maintaining parallel ports:
+[`brainevent`][brainevent], [`braintools`][braintools], and [`brainunit`][brainunit].
+Many internal functions delegate to their implementations, so `brainpy` and these
+packages share the same code rather than maintaining parallel ports:
 
 - State handling, environment settings, and compiled transformations come from
   `brainstate`, through `State`, `environ`, and `transform`.
 - `brainpy.math.sparse`, `brainpy.math.event`, and `brainpy.math.jitconn` build
-  `brainevent` structures such as `CSR`, `CSC`, and the just-in-time connectivity types,
+  `brainevent` structures such as `CSR` and the just-in-time connectivity types,
   then hand the computation over to them.
 - `brainpy.math.surrogate` is an alias of `braintools.surrogate`; `brainpy.losses` and
   `brainpy.measure` delegate to `braintools.metric`, `brainpy.initialize` to
   `braintools.init`, `brainpy.inputs` to `braintools.input`, and
   `brainpy.visualization` to `braintools.visualize`.
-- The einops-style helpers in `brainpy.math` are re-exported from `brainunit.math`.
 
 Using [`brainx`][brainx] packages internally is not the same as being compatible with the
 ecosystem. These modules borrow implementations, but their models still run on
 `brainpy.math.Variable`, so they do not gain unit safety, online learning, or
-composability with `brainstate`-based models. Only `brainpy.state` provides those.
+composability with `brainstate`-based models. Only
+[`brainpy.state`](#brainpy-state-for-ecosystem-compatibility) provides those.
 
 ## Limitations
 
-Three boundaries separate the original `brainpy` API from the rest of the ecosystem:
+Three boundaries separate the original `brainpy` API from the rest of the BrainX ecosystem:
 
-**No `brainunit` quantities in `brainpy.math`.** `brainpy` depends on
+**1. No `brainunit` quantities in `brainpy.math`.** 
+
+`brainpy` depends on
 [`brainunit`][brainunit] internally, but its array layer does not accept quantities:
 
 ```python
@@ -59,13 +62,17 @@ TypeError: exp requires ndarray or scalar arguments, got <class 'saiunit.Quantit
 Strip units at the boundary — `(10. * u.mV).to_decimal(u.mV)` — or move the model to
 `brainpy.state`. End-to-end unit safety exists only on the `brainstate` side.
 
-**No online learning for `brainpy` models.** [`braintrace`][braintrace] attaches
+**2. No online learning for `brainpy` models.** 
+
+[`braintrace`][braintrace] attaches
 eligibility traces to operations inside `brainstate` modules. It cannot see a
 `brainpy.math.Variable` graph.
 
-**No mixed model trees.** Modules from the two state systems cannot be composed into one
-model. A `brainpy.state` module placed inside a `brainpy.DynSysGroup` never gets its
-states initialized and fails at run time:
+**3. No mixed model trees.** 
+
+Modules built on `brainpy.math.Variable` and on
+`brainstate.State` cannot be composed into one model. A `brainpy.state` module placed
+inside a `brainpy.DynSysGroup` never gets its states initialized and fails at run time:
 
 ```python
 AttributeError: 'LIF' object has no attribute 'V'
@@ -75,18 +82,19 @@ The two can still live in the same script as separate models. The same applies t
 [`braincell`][braincell] and [`brainmass`][brainmass] models: usable alongside a `brainpy`
 project, but not inside one `brainpy` model.
 
+(should-you-port)=
 ## Should you port?
 
-Existing `brainpy` projects do not need to be rewritten; they keep working on the same
-foundations as the rest of the ecosystem. Porting a model to the `brainstate`-based
-packages pays off when it needs unit-safe parameters, multicompartment cells, neural-mass
-infrastructure, or online learning. Port whole models, not individual layers, and keep a
-reduced `brainpy` model around if you still need `brainpy.analysis`.
+Your existing `brainpy` projects do not need to be rewritten; they keep working on the same
+foundations as the rest of the ecosystem. Porting a model to `brainpy.state` or another
+`brainstate`-based package pays off when it needs unit-safe parameters, multicompartment
+cells, neural-mass infrastructure, or online learning. Port whole models, not individual
+layers, and keep a reduced `brainpy` model around if you still need `brainpy.analysis`.
 
-
+(brainpy-state-for-ecosystem-compatibility)=
 ## `brainpy.state` for ecosystem compatibility
 
-Since BrainPy 2.9.0 the `brainpy` distribution ships two APIs built on different state
+Since BrainPy 2.7.0 the `brainpy` distribution ships two APIs built on different state
 systems:
 
 | | `brainpy` | `brainpy.state` |
@@ -106,19 +114,19 @@ take [`brainunit`][brainunit] quantities as parameters, they can be trained onli
 its own state system.
 
 Both APIs are installed by `pip install -U BrainX` and import cleanly into the same
-process, so a project can move one model at a time.
+process, so a project can move one model at a time. For a hands-on introduction, work
+through the [point-neuron network tutorial](./tutorials/brainpy_point_neuron_networks.ipynb).
 
 ## Choosing a package in BrainX
 
 | your situation | recommendation |
 | --- | --- |
-| Maintaining a working `brainpy` project | keep it; see *Should you port?* below |
+| Maintaining a working `brainpy` project | keep it; see [Should you port?](#should-you-port) above |
+| Porting an existing `brainpy` point-neuron model | [`brainpy.state`][brainpy.state] (same model names and projection patterns) |
 | Modeling large-scale point-neuron spiking neural networks | [`brainspike`][brainspike] |
 | Modeling ions, ion channels, or morphology | [`braincell`][braincell] |
 | Modeling neural-mass or whole-brain dynamics | [`brainmass`][brainmass] |
 | Phase-plane or bifurcation analysis | `brainpy.analysis` |
-
-
 
 [brainx]: https://brainx.chaobrain.com/
 [brainpy]: https://brainpy.readthedocs.io/
