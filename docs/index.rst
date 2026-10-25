@@ -108,7 +108,6 @@ The tutorials are organized around the BrainX package layers:
 
    install.md
    brainpy-to-brainx.md
-   brainpy-migration-notes.md
    CHANGELOG.md
 
 
