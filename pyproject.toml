@@ -25,7 +25,7 @@ name = "BrainX"
 description = "Ecosystem for Brain Simulation."
 readme = "README.md"
 requires-python = ">=3.12"
-authors = [{ name = "BrainX Ecosystem", email = "chao.brain@qq.com" }]
+authors = [{ name = "BrainX Ecosystem", email = "chaobrain@outlook.com" }]
 classifiers = [
     "Natural Language :: English",
     "Operating System :: OS Independent",
