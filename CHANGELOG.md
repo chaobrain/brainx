@@ -11,6 +11,8 @@
   and add **BrainSpike `0.2.0`** (`pip install brainspikes`, `import brainspike`), the point-neuron spiking network
   package with NEST-compatible models. `brainpy-state` leaves the pin set.
 - The NEST-compatible tutorial is now `tutorials/brainspike_NEST_compatible.ipynb`.
+- Upgrade the infrastructure pins: brainunit `0.6.0`, brainevent `0.3.0`, brainstate `0.6.0`,
+  braintools `0.4.0`, braintrace `0.2.8`.
 
 
 ## v2026.8.18
