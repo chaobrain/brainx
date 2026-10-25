@@ -18,8 +18,11 @@ scales.
 
 **Core components** in this ecosystem includes:
 
-- [BrainPy](https://github.com/brainpy/BrainPy): Modeling of point neuron-based spiking neural networks (SNNs), comes
-  from Prof. Si Wu's lab at Peking University.
+- [BrainPy](https://github.com/brainpy/BrainPy): General-purpose brain dynamics programming, including the state-based
+  models of `brainpy.state`, comes from Prof. Si Wu's lab at Peking University.
+
+- [BrainSpike](https://github.com/chaobrain/brainspike): Point-neuron spiking neural networks: NEST-compatible models,
+  simulation, and training.
 
 - [BrainUnit](https://github.com/chaobrain/brainunit): Comprehensive physical units and unit-aware mathematical system
   for brain dynamics.

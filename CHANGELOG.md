@@ -5,6 +5,21 @@
 
 
 
+## v2026.10.25
+
+This release adds **BrainSpike** to the bundle and moves the whole pinned set to
+its latest versions, with JAX up to 0.12.0.1.
+
+- Pin **BrainPy `2.9.0`**, which includes the state-based models in `brainpy.state`,
+  and add **BrainSpike `0.2.0`** (`pip install brainspikes`, `import brainspike`), the point-neuron spiking network
+  package with NEST-compatible models. `brainpy-state` leaves the pin set.
+- The NEST-compatible tutorial is now `tutorials/brainspike_NEST_compatible.ipynb`.
+- Upgrade the infrastructure pins: brainunit `0.6.0`, brainevent `0.3.0`, brainstate `0.6.0`,
+  braintools `0.4.0`, braintrace `0.2.8`.
+- Upgrade **BrainCell** to `0.2.0`.
+- Allow JAX up to `0.12.0.1` (`jax>=0.9.0,<=0.12.0.1`); CI also tests JAX 0.12.0.
+
+
 ## v2026.8.18
 
 This release brings the bundle to **JAX 0.11**. JAX 0.11.0 and 0.11.1 changed

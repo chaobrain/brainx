@@ -168,15 +168,34 @@ def test_brainstate_nn_linear_forward():
 
 def test_brainpy_state_neuron_step():
     """A ``brainpy.state`` LIF neuron initialises and advances one finite step."""
-    import brainpy.state as bp_state
+    import brainpy
 
     with brainstate.environ.context(dt=0.1 * u.ms):
-        neuron = bp_state.LIF(5)
+        neuron = brainpy.state.LIF(5)
         brainstate.nn.init_all_states(neuron)
         out = neuron(jnp.ones(5) * u.mA)
 
     assert jnp.asarray(out).shape == (5,)
     assert bool(jnp.all(jnp.isfinite(jnp.asarray(out))))
+
+
+# ---------------------------------------------------------------------------
+# brainspike — a NEST-compatible neuron runs under the Simulator.
+# ---------------------------------------------------------------------------
+
+def test_brainspike_simulator_run():
+    """A ``brainspike`` ``iaf_psc_alpha`` neuron simulates and records a finite trace."""
+    import brainspike
+
+    sim = brainspike.Simulator(dt=0.1 * u.ms)
+    neuron = sim.create(brainspike.iaf_psc_alpha, 1, I_e=376.0 * u.pA)
+    vm = sim.create(brainspike.voltmeter)
+    sim.connect(vm, neuron)
+    res = sim.simulate(10.0 * u.ms)
+    v = jnp.asarray(u.get_mantissa(res.trace(vm, "V_m") / u.mV))
+
+    assert v.shape[1] == 1
+    assert bool(jnp.all(jnp.isfinite(v)))
 
 
 # ---------------------------------------------------------------------------
