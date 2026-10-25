@@ -83,7 +83,7 @@ class Test:
             "braintrace",
             "braincell",
             "brainpy",
-            "brainspike",
+            "brainspikes",
             "brainmass",
         }
         missing = sorted(expected - set(_PINNED))

@@ -8,7 +8,7 @@
 ## Unreleased
 
 - Pin **BrainPy `2.9.0`**, which includes the state-based models in `brainpy.state`,
-  and add **BrainSpike `0.2.0`** (`brainspike`), the point-neuron spiking network
+  and add **BrainSpike `0.2.0`** (`pip install brainspikes`, `import brainspike`), the point-neuron spiking network
   package with NEST-compatible models. `brainpy-state` leaves the pin set.
 - The NEST-compatible tutorial is now `tutorials/brainspike_NEST_compatible.ipynb`.
 
