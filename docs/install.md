@@ -56,7 +56,7 @@ Releases use date-style versions. Example:
 pip install BrainX==2026.10.25
 ```
 
-See the change log for the exact component versions: {doc}`Change log <CHANGELOG>`
+See the change log for the exact component versions: [Change log](https://brainx.chaobrain.com/summ/CHANGELOG.html).
 
 ## From source (development)
 
