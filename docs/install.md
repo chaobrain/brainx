@@ -4,7 +4,7 @@ BrainX is a meta-package that installs a curated set of BrainX components known 
 
 ## Requirements
 
-- Python ≥ 3.10 (officially tested on 3.10, 3.11, 3.12, 3.13, 3.14)
+- Python >=3.12 (CI currently tests Python 3.13)
 - pip 23+ (`python -m pip install --upgrade pip`)
 - Optional: GPU/TPU drivers and libraries if you plan to use accelerators
 
@@ -53,10 +53,10 @@ see [JAX installation](https://docs.jax.dev/en/latest/installation.html).
 Releases use date-style versions. Example:
 
 ```bash
-pip install BrainX==2025.9.15
+pip install BrainX==2026.10.25
 ```
 
-See the change log for the exact component versions: [docs/CHANGELOG.md](./CHANGELOG.md)
+See the change log for the exact component versions: [Change log](https://brainx.chaobrain.com/summ/CHANGELOG.html).
 
 ## From source (development)
 
@@ -80,4 +80,19 @@ If using a GPU, you should see a CUDA device listed.
 
 - Upgrade pip/setuptools/wheel: `python -m pip install -U pip setuptools wheel`
 - On GPU, ensure the installed JAX wheel matches your CUDA toolkit version
-- If import fails, try a clean env: `python -m venv .venv && .venv\\Scripts\\activate && pip install -U BrainX`
+- If import fails, try a clean environment:
+
+  ```bash
+  python -m venv .venv
+  ```
+  Activate it using the command for your platform and shell:
+
+  - Linux/macOS (bash/zsh): `source .venv/bin/activate`
+  - Windows (PowerShell): `.venv\Scripts\Activate.ps1`
+  - Windows (cmd.exe): `.venv\Scripts\activate.bat`
+
+  Then install BrainX:
+
+  ```bash
+  pip install -U BrainX
+  ```
