@@ -2,7 +2,7 @@
 brainunit==0.6.0
 brainevent==0.3.0
 brainstate==0.6.0
-braintools==0.4.0
+braintools==0.5.0
 braintrace==0.2.8
 
 # modeling packages
