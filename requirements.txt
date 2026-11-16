@@ -15,5 +15,5 @@ brainmass==0.1.1
 numpy>=2.4.4
 jax>=0.9.0,<=0.12.0.1
 msgpack>=1.1.2
-optax>=0.2.8
+optax>=0.2.9
 matplotlib
